@@ -1,5 +1,25 @@
 # Thingsboard Integration with iGS03 & Ingics Beacons
 
+- [Thingsboard Integration with iGS03 \& Ingics Beacons](#thingsboard-integration-with-igs03--ingics-beacons)
+  - [Introduction](#introduction)
+  - [What is Thingsboard](#what-is-thingsboard)
+  - [Installation](#installation)
+  - [Basic Configurations for Ingics](#basic-configurations-for-ingics)
+    - [Import Rule Chains](#import-rule-chains)
+      - [Ingics iGS03 Timestamp Correction](#ingics-igs03-timestamp-correction)
+      - [Ingics iGS03 Message Rule](#ingics-igs03-message-rule)
+      - [Ingics Beacon Message Rule](#ingics-beacon-message-rule)
+    - [Import Device Profiles](#import-device-profiles)
+      - [IGS03 Device Profile](#igs03-device-profile)
+      - [Ingics Beacon Device Profile](#ingics-beacon-device-profile)
+  - [Setup Gateway and Beacons](#setup-gateway-and-beacons)
+    - [Create Beacon Device Entity](#create-beacon-device-entity)
+    - [Create Gateway Device Entity](#create-gateway-device-entity)
+    - [Configure the iGS03 Application](#configure-the-igs03-application)
+  - [Enjoy It](#enjoy-it)
+  - [Troubleshoot](#troubleshoot)
+
+
 ## Introduction
 
 This document provide a step-by-step instruction to integrate a iGS03 BLE gateway and Ingics BLE sensor beacons with Thingsboard.
