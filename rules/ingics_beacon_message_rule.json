@@ -1,0 +1,179 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Ingics Beacon Message Rule",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null,
+    "externalId": null
+  },
+  "metadata": {
+    "firstNodeIndex": 5,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 295,
+          "layoutY": 246
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbDeleteKeysNode",
+        "name": "remove gw",
+        "debugMode": false,
+        "configuration": {
+          "fromMetadata": false,
+          "keys": [
+            "gw"
+          ]
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 296,
+          "layoutY": 345
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbDeleteKeysNode",
+        "name": "remove type",
+        "debugMode": false,
+        "configuration": {
+          "fromMetadata": false,
+          "keys": [
+            "type"
+          ]
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 679,
+          "layoutY": 551
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Timeseries",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0,
+          "skipLatestPersistence": false,
+          "useServerTs": false
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 297,
+          "layoutY": 555
+        },
+        "type": "org.thingsboard.rule.engine.profile.TbDeviceProfileNode",
+        "name": "Device Profile",
+        "debugMode": false,
+        "configuration": {
+          "persistAlarmRulesState": false,
+          "fetchAlarmRulesStateOnStart": false
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 294,
+          "layoutY": 443
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbDeleteKeysNode",
+        "name": "remove tag",
+        "debugMode": false,
+        "configuration": {
+          "fromMetadata": false,
+          "keys": [
+            "tag"
+          ]
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 303,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbMsgTypeSwitchNode",
+        "name": "Message Type Switch Node",
+        "debugMode": false,
+        "configuration": {
+          "version": 0
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 679,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.action.TbLogNode",
+        "name": "log other",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "return '\\n' + msgType + '\\nIncoming message:\\n' + JSON.stringify(msg) + '\\nIncoming metadata:\\n' + JSON.stringify(metadata);",
+          "tbelScript": "return '\\nIncoming message:\\n' + JSON.stringify(msg) + '\\nIncoming metadata:\\n' + JSON.stringify(metadata);"
+        },
+        "externalId": null
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 4,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 3,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 0,
+        "type": "Post telemetry"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 6,
+        "type": "Other"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}
