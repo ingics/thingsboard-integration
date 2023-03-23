@@ -1,14 +1,11 @@
 {
-  "name": "ibsXX",
-  "description": "Ingics beacon (iBS0X) device profile",
+  "name": "ibs01h",
+  "description": "Ingics iBS01H Device Profile",
   "image": null,
   "type": "DEFAULT",
   "transportType": "DEFAULT",
   "provisionType": "DISABLED",
-  "defaultRuleChainId": {
-    "entityType": "RULE_CHAIN",
-    "id": "1d7bdce0-c3bf-11ed-bac6-63387e10dd9d"
-  },
+  "defaultRuleChainId": null,
   "defaultDashboardId": null,
   "defaultQueueName": null,
   "profileData": {
@@ -24,8 +21,8 @@
     },
     "alarms": [
       {
-        "id": "df7d263e-bf5b-5e6d-4cc7-618d04bca8f5",
-        "alarmType": "Low Battery",
+        "id": "a34a5ab6-0cd3-7534-9454-d64397ea7bb6",
+        "alarmType": "battery low",
         "createRules": {
           "MAJOR": {
             "condition": {
@@ -41,7 +38,7 @@
                     "type": "NUMERIC",
                     "operation": "LESS",
                     "value": {
-                      "defaultValue": 2.7,
+                      "defaultValue": 2.65,
                       "userValue": null,
                       "dynamicValue": null
                     }
@@ -49,7 +46,13 @@
                 }
               ],
               "spec": {
-                "type": "SIMPLE"
+                "type": "DURATION",
+                "unit": "MINUTES",
+                "predicate": {
+                  "defaultValue": 10,
+                  "userValue": null,
+                  "dynamicValue": null
+                }
               }
             },
             "schedule": null,

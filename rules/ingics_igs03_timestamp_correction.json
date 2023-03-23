@@ -35,24 +35,8 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 50,
-          "layoutY": 349
-        },
-        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "is second",
-        "debugMode": false,
-        "configuration": {
-          "scriptLang": "TBEL",
-          "jsScript": "return msg.temperature > 20;",
-          "tbelScript": "return msg.ts < 100000000000;"
-        },
-        "externalId": null
-      },
-      {
-        "additionalInfo": {
-          "description": "",
-          "layoutX": 48,
-          "layoutY": 475
+          "layoutX": 346,
+          "layoutY": 323
         },
         "type": "org.thingsboard.rule.engine.math.TbMathNode",
         "name": "sec to msec",
@@ -85,8 +69,8 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 351,
-          "layoutY": 350
+          "layoutX": 347,
+          "layoutY": 426
         },
         "type": "org.thingsboard.rule.engine.transform.TbCopyKeysNode",
         "name": "copy ts",
@@ -102,8 +86,8 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 699,
-          "layoutY": 251
+          "layoutX": 678,
+          "layoutY": 252
         },
         "type": "org.thingsboard.rule.engine.flow.TbRuleChainOutputNode",
         "name": "With Fixed TS",
@@ -116,8 +100,8 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 349,
-          "layoutY": 476
+          "layoutX": 346,
+          "layoutY": 551
         },
         "type": "org.thingsboard.rule.engine.transform.TbDeleteKeysNode",
         "name": "remove  data ts",
@@ -139,42 +123,27 @@
       },
       {
         "fromIndex": 0,
-        "toIndex": 4,
+        "toIndex": 3,
         "type": "False"
       },
       {
         "fromIndex": 1,
         "toIndex": 2,
-        "type": "True"
-      },
-      {
-        "fromIndex": 1,
-        "toIndex": 3,
-        "type": "False"
+        "type": "Success"
       },
       {
         "fromIndex": 2,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
         "toIndex": 3,
-        "type": "Success"
-      },
-      {
-        "fromIndex": 3,
-        "toIndex": 5,
         "type": "Failure"
       },
       {
-        "fromIndex": 3,
-        "toIndex": 5,
-        "type": "Success"
-      },
-      {
-        "fromIndex": 5,
-        "toIndex": 4,
-        "type": "Failure"
-      },
-      {
-        "fromIndex": 5,
-        "toIndex": 4,
+        "fromIndex": 4,
+        "toIndex": 3,
         "type": "Success"
       }
     ],

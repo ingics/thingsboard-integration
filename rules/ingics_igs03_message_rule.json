@@ -3,7 +3,7 @@
     "additionalInfo": {
       "description": "Handling message publish from iGS03W/M/E."
     },
-    "name": "Ingics IGS03 Message Rule",
+    "name": "Ingics iGS03 Message Rule",
     "type": "CORE",
     "firstRuleNodeId": null,
     "root": false,
@@ -12,13 +12,13 @@
     "externalId": null
   },
   "metadata": {
-    "firstNodeIndex": 4,
+    "firstNodeIndex": 3,
     "nodes": [
       {
         "additionalInfo": {
           "description": "",
           "layoutX": 400,
-          "layoutY": 249
+          "layoutY": 225
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "get data array",
@@ -34,7 +34,7 @@
         "additionalInfo": {
           "description": "",
           "layoutX": 400,
-          "layoutY": 351
+          "layoutY": 301
         },
         "type": "org.thingsboard.rule.engine.transform.TbSplitArrayMsgNode",
         "name": "get each messages",
@@ -47,11 +47,11 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 402,
-          "layoutY": 555
+          "layoutX": 401,
+          "layoutY": 526
         },
         "type": "org.thingsboard.rule.engine.transform.TbChangeOriginatorNode",
-        "name": "iGS03 to iBSXX",
+        "name": "gateway to beacon",
         "debugMode": false,
         "configuration": {
           "originatorSource": "ENTITY",
@@ -74,22 +74,8 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 399,
-          "layoutY": 449
-        },
-        "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
-        "name": "correct ts",
-        "debugMode": false,
-        "configuration": {
-          "ruleChainId": "ebbfa4f0-c3ac-11ed-bac6-63387e10dd9d"
-        },
-        "externalId": null
-      },
-      {
-        "additionalInfo": {
-          "description": "",
-          "layoutX": 50,
-          "layoutY": 251
+          "layoutX": 55,
+          "layoutY": 227
         },
         "type": "org.thingsboard.rule.engine.filter.TbMsgTypeSwitchNode",
         "name": "Message Type Switch Node",
@@ -102,24 +88,8 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 725,
-          "layoutY": 351
-        },
-        "type": "org.thingsboard.rule.engine.action.TbLogNode",
-        "name": "log others",
-        "debugMode": false,
-        "configuration": {
-          "scriptLang": "TBEL",
-          "jsScript": "return '\\nIncoming message:\\n' + JSON.stringify(msg) + '\\nIncoming metadata:\\n' + JSON.stringify(metadata);",
-          "tbelScript": "return '\\nIncoming message:\\n' + JSON.stringify(msg) + '\\nIncoming metadata:\\n' + JSON.stringify(metadata);"
-        },
-        "externalId": null
-      },
-      {
-        "additionalInfo": {
-          "description": "",
-          "layoutX": 400,
-          "layoutY": 147
+          "layoutX": 401,
+          "layoutY": 151
         },
         "type": "org.thingsboard.rule.engine.telemetry.TbMsgAttributesNode",
         "name": "Save Client Attributes",
@@ -134,8 +104,8 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 726,
-          "layoutY": 550
+          "layoutX": 400,
+          "layoutY": 601
         },
         "type": "org.thingsboard.rule.engine.filter.TbDeviceTypeSwitchNode",
         "name": "Device Profile Switch",
@@ -148,14 +118,137 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 725,
-          "layoutY": 650
+          "layoutX": 401,
+          "layoutY": 374
         },
-        "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
-        "name": "iBSXX Rule",
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "preprocessing",
         "debugMode": false,
         "configuration": {
-          "ruleChainId": "1d7bdce0-c3bf-11ed-bac6-63387e10dd9d"
+          "scriptLang": "JS",
+          "jsScript": "if (typeof msg != \"string\") {\n    return {msg: msg, metadata: metadata, msgType: msgType};\n}\nvar match = msg.match(/^\\$(.+),([0-9a-fA-F]{12}),([0-9a-fA-F]{12}),(-?\\d+),(.*)$/);\nif (match) {\n    var newMsg = {\n        type: match[1],\n        tag: match[2],\n        gw: match[3],\n        rssi: parseInt(match[4], 10),\n        payload: match[5]\n    };\n    var tsmatch = match[5].match(\n        /^([0-9a-fA-F]*),([0-9..]+)$/);\n    if (tsmatch) {\n        newMsg.ts = parseFloat(tsmatch[2]);\n        newMsg.payload = tsmatch[1];\n    }\n    return {\n        msg: newMsg,\n        metadata: metadata,\n        msgType: msgType\n    };\n} else {\n    return {msg: msg, metadata: metadata, msgType: msgType};\n}",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 704,
+          "layoutY": 503
+        },
+        "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
+        "name": "ibs01t",
+        "debugMode": false,
+        "configuration": {
+          "ruleChainId": "0d186220-c864-11ed-bac6-63387e10dd9d"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 401,
+          "layoutY": 451
+        },
+        "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
+        "name": "correct timestamp",
+        "debugMode": false,
+        "configuration": {
+          "ruleChainId": "ebbfa4f0-c3ac-11ed-bac6-63387e10dd9d"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 704,
+          "layoutY": 428
+        },
+        "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
+        "name": "ibs01h",
+        "debugMode": false,
+        "configuration": {
+          "ruleChainId": "7297e310-c87c-11ed-bac6-63387e10dd9d"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1001,
+          "layoutY": 402
+        },
+        "type": "org.thingsboard.rule.engine.profile.TbDeviceProfileNode",
+        "name": "apply device profile",
+        "debugMode": false,
+        "configuration": {
+          "persistAlarmRulesState": false,
+          "fetchAlarmRulesStateOnStart": false
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1001,
+          "layoutY": 300
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "save telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0,
+          "skipLatestPersistence": false,
+          "useServerTs": false
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1000,
+          "layoutY": 502
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbDeleteKeysNode",
+        "name": "remove useless keys",
+        "debugMode": false,
+        "configuration": {
+          "fromMetadata": false,
+          "keys": [
+            "payload",
+            "gw",
+            "tag",
+            "type"
+          ]
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 703,
+          "layoutY": 576
+        },
+        "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
+        "name": "ibs03t",
+        "debugMode": false,
+        "configuration": {
+          "ruleChainId": "98047d30-c885-11ed-bac6-63387e10dd9d"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 704,
+          "layoutY": 652
+        },
+        "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
+        "name": "ibs05co2",
+        "debugMode": false,
+        "configuration": {
+          "ruleChainId": "ec1bda40-c884-11ed-bac6-63387e10dd9d"
         },
         "externalId": null
       }
@@ -167,49 +260,89 @@
         "type": "Success"
       },
       {
-        "fromIndex": 0,
-        "toIndex": 5,
-        "type": "Failure"
-      },
-      {
         "fromIndex": 1,
-        "toIndex": 3,
+        "toIndex": 6,
         "type": "Success"
       },
       {
-        "fromIndex": 1,
-        "toIndex": 5,
-        "type": "Failure"
-      },
-      {
         "fromIndex": 2,
         "toIndex": 5,
-        "type": "Failure"
-      },
-      {
-        "fromIndex": 2,
-        "toIndex": 7,
         "type": "Success"
       },
       {
         "fromIndex": 3,
-        "toIndex": 2,
-        "type": "With Fixed TS"
-      },
-      {
-        "fromIndex": 4,
         "toIndex": 0,
         "type": "Post telemetry"
       },
       {
-        "fromIndex": 4,
-        "toIndex": 6,
+        "fromIndex": 3,
+        "toIndex": 4,
         "type": "Post attributes"
       },
       {
-        "fromIndex": 7,
+        "fromIndex": 5,
+        "toIndex": 7,
+        "type": "ibs01t"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 9,
+        "type": "ibs01h"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 13,
+        "type": "ibs03t"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 14,
+        "type": "ibs05co2"
+      },
+      {
+        "fromIndex": 6,
         "toIndex": 8,
-        "type": "ibsXX"
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 12,
+        "type": "telemetry"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 2,
+        "type": "With Fixed TS"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 12,
+        "type": "telemetry"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 11,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 10,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 10,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 12,
+        "type": "telemetry"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 12,
+        "type": "telemetry"
       }
     ],
     "ruleChainConnections": null

@@ -1,6 +1,6 @@
 {
   "name": "igs03",
-  "description": "Ingics iGS03 device profile",
+  "description": "Ingics iGS03 Device Profile",
   "image": null,
   "type": "DEFAULT",
   "transportType": "DEFAULT",
