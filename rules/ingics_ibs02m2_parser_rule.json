@@ -1,0 +1,114 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": "Paring and save telemetry of iBS03H payload"
+    },
+    "name": "Ingics iBS02M2 Parser Rule",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null,
+    "externalId": null
+  },
+  "metadata": {
+    "firstNodeIndex": 0,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 58,
+          "layoutY": 250
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbCheckMessageNode",
+        "name": "has payload",
+        "debugMode": false,
+        "configuration": {
+          "messageNames": [
+            "payload"
+          ],
+          "metadataNames": [],
+          "checkAllKeys": true
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 350,
+          "layoutY": 250
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "payload parser",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "if (msg.payload.match(/^02010612FF0D0083BC.{18}04/)) {\n    msg.vbatt = (parseInt(msg.payload.substr(18, 2), 16) + parseInt(msg.payload.substr(20, 2), 16) * 256) / 100;\n    var event = parseInt(msg.payload.substr(22, 2), 16);\n    msg.din = Boolean(event & 0x40);\n}\nreturn { msg: msg, metadata: metadata, msgType: msgType }\n",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 650,
+          "layoutY": 374
+        },
+        "type": "org.thingsboard.rule.engine.flow.TbRuleChainOutputNode",
+        "name": "telemetry",
+        "debugMode": false,
+        "configuration": {
+          "version": 0
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 349,
+          "layoutY": 375
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbCheckMessageNode",
+        "name": "validation",
+        "debugMode": false,
+        "configuration": {
+          "messageNames": [
+            "vbatt",
+            "din"
+          ],
+          "metadataNames": [],
+          "checkAllKeys": true
+        },
+        "externalId": null
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 3,
+        "type": "False"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 3,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "True"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

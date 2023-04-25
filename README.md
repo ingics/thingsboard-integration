@@ -65,6 +65,8 @@ Below rules are used for paring BLE ADV data for different beacons.
 | [ingics_ibs01h_parser_rule.json](./rules/ingics_ibs01h_parser_rule.json) | Ingics iBS01H Payload Parser Rule |
 | [ingics_ibs01t_parser_rule.json](./rules/ingics_ibs01t_parser_rule.json) | Ingics iBS01H Payload Parser Rule |
 | [ingics_ibs03t_parser_rule.json](./rules/ingics_ibs03t_parser_rule.json) | Ingics iBS03T Payload Parser Rule |
+| [ingics_ibs02m2_parser_rule.json](./rules/ingics_ibs02m2_parser_rule.json) | Ingics iBS02M2 Payload Parser Rule |
+| [ingics_ibs02pir2_parser_rule.json](.rules/ingics_ibs02pir2_parser_rule.json) | Ingics iBS02PIR2 Payload Parser Rule |
 
 #### Rule Chains as Sub-Function
 
@@ -106,9 +108,11 @@ File List:
 
 | FILE | DESCRIPTION |
 | ---- | ----------- |
-| [ibs01h.json](./profiles/ibs01h.json) | Profile for iBS01H, used to link to iBS01H parser rule |
-| [ibs01t.json](./profiles/ibs01t.json) | Profile for iBS01T, used to link to iBS01T parser rule |
-| [ibs03t.json](./profiles/ibs03t.json) | Profile for iBS03T, used to link to iBS03T parser rule |
+| [ibs01h.json](./profiles/ibs01h.json) | Device Profile for iBS01H, used to link to parser rule |
+| [ibs01t.json](./profiles/ibs01t.json) | Device Profile for iBS01T, used to link to parser rule |
+| [ibs03t.json](./profiles/ibs03t.json) | Device Profile for iBS03T, used to link to parser rule |
+| [ibs02m2.json](./profiles/ibs02m2.json) | Device Profile for iBS02M2, used to link to parser rule |
+| [ibs02pir2.json](./profiles/ibs02pir2.json) | Device Profile for iBS02PIR2, used to link to parser rule |
 
 ### Create Device Entities
 
@@ -241,6 +245,8 @@ The iGS03 root rule chains use device profile to select parser, so we need to cr
 Now we need to link the parser and profile.
 1. Open the Ingics iGS03 Message Rule Chain.
 2. Add a new "rule chain" node as below
+
+   ![alt](./images/RuleChainNode.png)
 
    ![alt](./images/NewNodeRuleChain.png)
 

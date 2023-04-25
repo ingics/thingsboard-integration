@@ -241,14 +241,28 @@
       {
         "additionalInfo": {
           "description": "",
-          "layoutX": 704,
-          "layoutY": 652
+          "layoutX": 705,
+          "layoutY": 650
         },
         "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
-        "name": "ibs05co2",
+        "name": "ibs02pir2",
         "debugMode": false,
         "configuration": {
-          "ruleChainId": "ec1bda40-c884-11ed-bac6-63387e10dd9d"
+          "ruleChainId": "305781d0-e330-11ed-bac6-63387e10dd9d"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 707,
+          "layoutY": 716
+        },
+        "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
+        "name": "ibs02m2",
+        "debugMode": false,
+        "configuration": {
+          "ruleChainId": "eb1a0600-e330-11ed-bac6-63387e10dd9d"
         },
         "externalId": null
       }
@@ -297,7 +311,12 @@
       {
         "fromIndex": 5,
         "toIndex": 14,
-        "type": "ibs05co2"
+        "type": "ibs02pir2"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 15,
+        "type": "ibs02m2"
       },
       {
         "fromIndex": 6,
@@ -341,6 +360,11 @@
       },
       {
         "fromIndex": 14,
+        "toIndex": 12,
+        "type": "telemetry"
+      },
+      {
+        "fromIndex": 15,
         "toIndex": 12,
         "type": "telemetry"
       }
