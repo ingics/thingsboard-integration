@@ -1,0 +1,99 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": "Payload parser for non-INGICS beacons"
+    },
+    "name": "Customize Parser Rule",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null,
+    "externalId": null
+  },
+  "metadata": {
+    "firstNodeIndex": 0,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 301,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbCheckMessageNode",
+        "name": "Check raw_data exists",
+        "debugMode": true,
+        "configuration": {
+          "messageNames": [
+            "raw_data"
+          ],
+          "metadataNames": [],
+          "checkAllKeys": true
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "Select parser by device profile",
+          "layoutX": 300,
+          "layoutY": 275
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbDeviceTypeSwitchNode",
+        "name": "Select Parser",
+        "debugMode": false,
+        "configuration": {
+          "version": 0
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "A dummy example of payload parser",
+          "layoutX": 620,
+          "layoutY": 275
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Customize Parser Example",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var newMsg = {\n    \"value_one\": parseInt(msg.raw_data.substr(0,2), 16),\n    \"value_two\": parseInt(msg.raw_data.substr(2, 2), 16) + parseInt(msg.raw_data.substr(4, 2), 16) * 256\n};\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "Parsed telemetry message",
+          "layoutX": 926,
+          "layoutY": 276
+        },
+        "type": "org.thingsboard.rule.engine.flow.TbRuleChainOutputNode",
+        "name": "telemetry",
+        "debugMode": false,
+        "configuration": {
+          "version": 0
+        },
+        "externalId": null
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "customize"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}
