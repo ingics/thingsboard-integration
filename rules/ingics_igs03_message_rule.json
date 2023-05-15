@@ -265,6 +265,20 @@
           "ruleChainId": "eb1a0600-e330-11ed-bac6-63387e10dd9d"
         },
         "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 705,
+          "layoutY": 361
+        },
+        "type": "org.thingsboard.rule.engine.flow.TbRuleChainInputNode",
+        "name": "ibs03r",
+        "debugMode": false,
+        "configuration": {
+          "ruleChainId": "1792f2f0-f2cc-11ed-baa8-3d3061451bca"
+        },
+        "externalId": null
       }
     ],
     "connections": [
@@ -319,6 +333,11 @@
         "type": "ibs02m2"
       },
       {
+        "fromIndex": 5,
+        "toIndex": 16,
+        "type": "ibs03r"
+      },
+      {
         "fromIndex": 6,
         "toIndex": 8,
         "type": "Success"
@@ -365,6 +384,11 @@
       },
       {
         "fromIndex": 15,
+        "toIndex": 12,
+        "type": "telemetry"
+      },
+      {
+        "fromIndex": 16,
         "toIndex": 12,
         "type": "telemetry"
       }

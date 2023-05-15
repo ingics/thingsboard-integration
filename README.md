@@ -65,6 +65,7 @@ Below rules are used for paring BLE ADV data for different beacons.
 | [ingics_ibs01h_parser_rule.json](./rules/ingics_ibs01h_parser_rule.json) | Ingics iBS01H Payload Parser Rule |
 | [ingics_ibs01t_parser_rule.json](./rules/ingics_ibs01t_parser_rule.json) | Ingics iBS01H Payload Parser Rule |
 | [ingics_ibs03t_parser_rule.json](./rules/ingics_ibs03t_parser_rule.json) | Ingics iBS03T Payload Parser Rule |
+| [ingics_ibs03r_parser_rule.json](./rules/ingics_ibs03r_parser_rule.json) | Ingics iBS03R Payload Parser Rule |
 | [ingics_ibs02m2_parser_rule.json](./rules/ingics_ibs02m2_parser_rule.json) | Ingics iBS02M2 Payload Parser Rule |
 | [ingics_ibs02pir2_parser_rule.json](.rules/ingics_ibs02pir2_parser_rule.json) | Ingics iBS02PIR2 Payload Parser Rule |
 
@@ -111,6 +112,7 @@ File List:
 | [ibs01h.json](./profiles/ibs01h.json) | Device Profile for iBS01H, used to link to parser rule |
 | [ibs01t.json](./profiles/ibs01t.json) | Device Profile for iBS01T, used to link to parser rule |
 | [ibs03t.json](./profiles/ibs03t.json) | Device Profile for iBS03T, used to link to parser rule |
+| [ibs03r.json](./profiles/ibs03r.json) | Device Profile for iBS03R, used to link to parser rule |
 | [ibs02m2.json](./profiles/ibs02m2.json) | Device Profile for iBS02M2, used to link to parser rule |
 | [ibs02pir2.json](./profiles/ibs02pir2.json) | Device Profile for iBS02PIR2, used to link to parser rule |
 
