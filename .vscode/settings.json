@@ -1,0 +1,6 @@
+{
+    "markdown-pdf.headerTemplate": "<div style=\"font-family: Syncopate; font-size: 34pt; font-weight: 700; margin-left: 1cm;\"><span style=\"color: #3c78d8;\">INGICS</span><span style=\"color: #a4c2f4\">&nbsp;TECHNOLOGY</span></div>",
+    "markdown-pdf.margin.top": "3cm",
+    "markdown-pdf.emoji": false,
+    "markdown-pdf.footerTemplate": "<div style=\"margin: 0 auto\"><span style=\"font-size: 8pt; color: #3c78d8; background-color: #718c00;\">TECHNOLOGY CO., LTD. &nbsp;&nbsp;&bull; &nbsp; &nbsp;SUPPORT@INGICS.COM &nbsp; &nbsp;&bull; &nbsp;&nbsp;WWW.INGICS.COM</span></div>",
+}

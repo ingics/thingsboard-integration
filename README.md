@@ -25,7 +25,9 @@ This repository provides an integration between [Ingics BLE Beacon Gateway](http
     - [Create Device Profile](#create-device-profile)
     - [Create Device Entity](#create-device-entity)
     - [Simulate iGS03 Publish Data](#simulate-igs03-publish-data)
+  - [Revision History](#revision-history)
 
+<div class="page"/>
 
 ## Overview
 
@@ -41,6 +43,8 @@ The integration is achieved through a set of ThingsBoard Rule Chains that parse 
 - Ingics Beacon Gateway iGS03 x 1
 - BLE sensor beacons using BLE advertisement to broadcast sensor data (Ingics [iBS03T](https://www.ingics.com/prod-ibs03t.html) and iBS01H in this guide)
 
+<div class="page"/>
+
 ## Quick Start
 
 ### Installation
@@ -49,11 +53,11 @@ Please follow the [ThingsBoard Installation Guid](https://thingsboard.io/docs/us
 
 ### Import Rule Chains
 
-First, we need to install some rule chains for handling the iGS03 publish message. The files located in [rules](./rules/) folder.
+First, we need to install some rule chains for handling the iGS03 publish message. The files located in [rules](https://github.com/ingics/thingsboard-integration/tree/decoded_format/rules) folder.
 
 #### Rule Chain for iGS03 Message Handler
 
-[ingics_igs03_message_rule.json](./rules/ingics_igs03_message_rule.json)
+[ingics_igs03_message_rule.json](https://github.com/ingics/thingsboard-integration/tree/decoded_format/rules/ingics_igs03_message_rule.json)
 
 This is the root rule chain for handling iGS03 device message. All messages publish to the device entity will be handled by this rule chain. The rule chain did
 1. Split messages (iGS03 message may contain multiple data in one publish)
@@ -63,19 +67,19 @@ This is the root rule chain for handling iGS03 device message. All messages publ
 
 #### Rule Chains for Fix Message Timestamp
 
-[ingics_igs03_timestamp_correction.json](./rules/ingics_igs03_timestamp_correction.json)
+[ingics_igs03_timestamp_correction.json](https://github.com/ingics/thingsboard-integration/tree/decoded_format/rules/ingics_igs03_timestamp_correction.json)
 
 The iGS03 support publish data with BLE receiving timestamp. This rule chain is used for filling the ADV timestamp into ThingsBoard message. It will be called by root rule chain of iGS03 message handler.
 
 #### Rule Chains for Customize Payload Parser
 
-[customize_parser_rule.json](rules/customize_parser_rule.json)
+[customize_parser_rule.json](https://github.com/ingics/thingsboard-integration/tree/decoded_format/rules/customize_parser_rule.json)
 
 Rule chain for customize parsers, including an example script. ThingsBoard support to development the parser script in Java Script. User can add their own payload parser into this rule chain.
 
 ### Create Device Profiles
 
-Then, create a device profile for iGS03 device. The device profile are used to connect the device entities (we will create them in [next section](#create-device-entities)) and rule chains. The files located in [profiles](./profiles/) folder.
+Then, create a device profile for iGS03 device. The device profile are used to connect the device entities (we will create them in [next section](#create-device-entities)) and rule chains.
 
 ![alt](./images/DeviceProfiles.png)
 
@@ -155,6 +159,8 @@ Things should be done. The telemetries should be published to the device entitie
 
 Now you can follow the documentation of ThingsBoard to create dashboards, alarms, ....
 
+<div class="page"/>
+
 ## Add Customize Parser for Other Sensor Tag
 
 For user using non-INGICS sensor tags. This chapter provide steps to add customize parser script for it. For demo, we assume the beacon model name is "MyNewTag".
@@ -213,3 +219,12 @@ So, you can use MQTT client application to publish data to ThingsBoard for debug
 The "raw_data" field is the BLE ADV payload in HEX string of the tag, you should get it on beacon's document. Or, you can try to capture the real packet from your beacon by some BLE applications or tools. For example, using "NRF Connect" on mobile phone. Remove the prefix "0x" of "Raw data", that's the data string we need.
 
 ![alt](./images/NrfConnectScanData.jpg)
+
+<div class="page"/>
+
+## Revision History
+
+| DATE | REVISION | CHANGE |
+| ---- | -------- | ------ |
+| Mar 23, 2023| 1 | Initial release |
+| May 16, 2023| 2 | With iGS03 built-in decoder |
